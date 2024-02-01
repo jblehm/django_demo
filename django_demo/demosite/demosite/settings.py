@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "polls.apps.PollsConfig",  # polls app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,19 +75,20 @@ WSGI_APPLICATION = 'demosite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+# CREATE DATABASE django_demo_db;
+# CREATE USER django_demo_db_user WITH ENCRYPTED PASSWORD 'django_demo_db_password';
+# GRANT ALL PRIVILEGES ON DATABASE django_demo_db TO django_demo_db_user;
+# ALTER USER django_demo_db_user CREATEDB;
+# python manage.py migrate #  The migrate command looks at the INSTALLED_APPS setting and creates any necessary database tables
+# python manage.py makemigrations #  By running makemigrations, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
+
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv('SQL_DATABASE', 'csawf'),
-        "USER": os.getenv('SQL_USER', 'csawf'),
-        "PASSWORD": os.getenv('SQL_PASSWORD', 'csawf'),
+        "NAME": os.getenv('SQL_DATABASE', 'django_demo_db'),
+        "USER": os.getenv('SQL_USER', 'django_demo_db_user'),
+        "PASSWORD": os.getenv('SQL_PASSWORD', 'django_demo_db_password'),
         "HOST": os.getenv('SQL_HOST','127.0.0.1'),  # set in docker-compose.yml
         "PORT": os.getenv('SQL_PORT', '5432'),  # default postgres port
     },
